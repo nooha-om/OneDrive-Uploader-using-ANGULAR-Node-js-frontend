@@ -15,6 +15,7 @@ export class FileEditorComponent {
   fileContent: string = '';
   backendUrl = 'http://localhost:3000';
   fileId: string = '';
+  spellErrors: any[] = [];
 
   constructor(private http: HttpClient) {}
 
@@ -60,5 +61,19 @@ export class FileEditorComponent {
       next: res => alert(res.message),
       error: err => console.error("Save failed:", err)
     });
+  }
+
+  // Check spelling
+  checkSpelling() {
+    this.http.post<any>(`${this.backendUrl}/spellcheck`, { text: this.fileContent })
+      .subscribe({
+        next: (res) => {
+          this.spellErrors = res.matches.map((m: any) => ({
+            word: this.fileContent.substring(m.offset, m.offset + m.length),
+            suggestions: m.replacements.map((r: any) => r.value)
+          }));
+        },
+        error: (err) => console.error("Spell check failed:", err)
+      });
   }
 }
