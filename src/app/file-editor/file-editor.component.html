@@ -12,5 +12,16 @@
 
   <div style="margin-top:10px;">
     <button (click)="saveFile()">Save File</button>
+    <button (click)="checkSpelling()">Check Spelling</button>
+  </div>
+
+ 
+  <div *ngIf="spellErrors.length > 0" style="margin-top:15px; text-align:left;">
+    <h3>Spell Check Suggestions:</h3>
+    <ul>
+      <li *ngFor="let err of spellErrors">
+        <b>{{ err.word }}</b> → Suggestions: {{ err.suggestions.join(", ") }}
+      </li>
+    </ul>
   </div>
 </div>
