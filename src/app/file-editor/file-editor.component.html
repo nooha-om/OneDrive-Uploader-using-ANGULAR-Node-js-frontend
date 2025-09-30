@@ -13,9 +13,9 @@
   <div style="margin-top:10px;">
     <button (click)="saveFile()">Save File</button>
     <button (click)="checkSpelling()">Check Spelling</button>
+    <button (click)="checkFileFromOneDrive()">Check File Issues</button>
   </div>
 
- 
   <div *ngIf="spellErrors.length > 0" style="margin-top:15px; text-align:left;">
     <h3>Spell Check Suggestions:</h3>
     <ul>
