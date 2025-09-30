@@ -63,7 +63,7 @@ export class FileEditorComponent {
     });
   }
 
-  // Check spelling
+  // Check spelling manually
   checkSpelling() {
     this.http.post<any>(`${this.backendUrl}/spellcheck`, { text: this.fileContent })
       .subscribe({
@@ -75,5 +75,21 @@ export class FileEditorComponent {
         },
         error: (err) => console.error("Spell check failed:", err)
       });
+  }
+
+  
+  checkFileFromOneDrive() {
+    if (!this.filename) return alert("Enter filename");
+
+    this.http.get<{ fileId: string, filename: string, content: string, errors: any[] }>(
+      `${this.backendUrl}/onedrive/checkFile/${this.filename}`
+    ).subscribe({
+      next: res => {
+        this.fileContent = res.content;
+        this.fileId = res.fileId;
+        this.spellErrors = res.errors;
+      },
+      error: err => console.error("Check file failed:", err)
+    });
   }
 }
