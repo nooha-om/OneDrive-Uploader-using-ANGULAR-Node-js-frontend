@@ -1,27 +1,61 @@
-<div style="text-align:center; margin-top:20px;">
-  <h2>OneDrive File Editor</h2>
 
-  <input [(ngModel)]="filename" placeholder="Filename" style="margin-bottom:10px;" />
 
-  <div style="margin-bottom:10px;">
-    <button (click)="uploadFile()">Upload File</button>
-    <button (click)="loadFile()">Load File</button>
-  </div>
-
-  <textarea [(ngModel)]="fileContent" rows="15" cols="80"></textarea>
-
-  <div style="margin-top:10px;">
-    <button (click)="saveFile()">Save File</button>
-    <button (click)="checkSpelling()">Check Spelling</button>
-    <button (click)="checkFileFromOneDrive()">Check File Issues</button>
-  </div>
-
-  <div *ngIf="spellErrors.length > 0" style="margin-top:15px; text-align:left;">
-    <h3>Spell Check Suggestions:</h3>
-    <ul>
-      <li *ngFor="let err of spellErrors">
-        <b>{{ err.word }}</b> → Suggestions: {{ err.suggestions.join(", ") }}
-      </li>
-    </ul>
-  </div>
+<div class="file-editor">
+  <h2 class="title">Onedrive File Editor</h2>
+     <div class="container">
+       <div class="top-controls">
+      <input 
+        [(ngModel)]="filename" 
+        placeholder="test.txt" 
+        class="filename-input" 
+      />
+    <button (click)="uploadFile()" class="btn btn-secondary">
+  <img src="upload.png" alt="Upload" class="icon-img" />
+  Upload File
+</button>
+      <button (click)="loadFile()" class="btn btn-secondary">
+         <img src="folder.png" alt="Upload" class="icon-img" />
+         Load File
+      </button>
+    </div>
+     <div class="editor-box">
+      <div class="editor-header">
+        <span>Editor</span>
+        <span class="format-label">Plain text</span>
+      </div>
+       <hr class="divider"/>
+      <div class ="editor-body">
+      <textarea 
+        [(ngModel)]="fileContent" 
+        class="editor-textarea"
+        placeholder="Start typing or load a file..."
+      ></textarea>
+      </div>
+    </div>
+      <div class="bottom-controls">
+      <button (click)="saveFile()" class="btn btn-secondary">
+                <img src="diskette.png" alt="Upload" class="icon-img" />
+      Save File
+      </button>
+      <button (click)="checkSpelling()" class="btn btn-primary">
+        <img src="spell-check.png" alt="Upload" class="icon-img" />
+        Check Spelling
+                     </button>
+    </div>
+    <hr class="divider"/>
+     <div *ngIf="spellErrors.length > 0" class="suggestions-section">
+      <h3 class="suggestions-title">Spell Check Suggestions:</h3>
+               <div *ngFor="let err of spellErrors" class="suggestion-item">
+        <span class="misspelled">Misspelled</span>
+        <span class="error-word">{{ err.word }}</span>
+        <span class="suggestions-label">Suggestions</span>
+                  <div class="suggestion-chips">
+          <span *ngFor="let sug of err.suggestions" class="chip">
+            {{ sug }}
+          </span>
+              </div>
+      </div>
+            </div>
+    </div>
+   
 </div>
